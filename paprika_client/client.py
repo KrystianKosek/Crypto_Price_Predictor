@@ -92,6 +92,9 @@ class Client(object):
             data: request.request - object that contains response from requests.get
             filename: str
         """
+
+        if not os.path.exists("data"):
+            os.mkdir("data")
         with open(f"data/{filename}", 'w') as fp:
             json.dump(data.json(), fp)
 

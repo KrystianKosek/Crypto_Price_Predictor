@@ -1,3 +1,4 @@
+Usage example: python client.py --today btc-bitcoin
 1. Client was created to supply (fetch from coinpaprika.com) three types of data:
     1. Today's data of specific 
     1. Today's data of all cryptocurrencies

@@ -47,7 +47,7 @@ class Client(object):
         Returns:
             None
         """
-        get_coin_url = os.path.join(self.base_url, "tickers", coin_id)
+        get_coin_url = "/".join((self.base_url, "tickers", coin_id))
         daily_coin = requests.get(url=get_coin_url)
         code_error(daily_coin.status_code)
         filename = "{}_{}.json".format(coin_id, self.cur_datetime.strftime("%Y-%m-%d"))
@@ -64,7 +64,7 @@ class Client(object):
             None
         """
         if is_date_valid(start_date):
-            get_coin_history_url = os.path.join(self.base_url, 'tickers', coin_id, 'historical')
+            get_coin_history_url = "/".join((self.base_url, 'tickers', coin_id, 'historical'))
             coin_history = requests.get(url=get_coin_history_url, params={"start": start_date})
             code_error(coin_history.status_code)
             filename = "{}_from_{}_to_{}.json".format(coin_id, start_date, self.cur_datetime.strftime("%Y-%m-%d"))
@@ -77,7 +77,7 @@ class Client(object):
         Returns:
             None
         """
-        get_all_coins_url = os.path.join(self.base_url, 'tickers')
+        get_all_coins_url = "/".join((self.base_url, 'tickers'))
         all_daily_coins = requests.get(url=get_all_coins_url)
         code_error(all_daily_coins.status_code)
         filename = "all_coins_{}.json".format(self.cur_datetime.strftime("%Y-%m-%d"))

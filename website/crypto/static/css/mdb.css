@@ -2335,47 +2335,47 @@ strong {
 }
 
 .pattern-1 {
-    background: url(../img/overlays/01.png);
+    background: url(../../website/website/static/img/overlays/01.png);
     background-attachment: fixed
 }
 
 .pattern-2 {
-    background: url(../img/overlays/02.png);
+    background: url(../../website/website/static/img/overlays/02.png);
     background-attachment: fixed
 }
 
 .pattern-3 {
-    background: url(../img/overlays/03.png);
+    background: url(../../website/website/static/img/overlays/03.png);
     background-attachment: fixed
 }
 
 .pattern-4 {
-    background: url(../img/overlays/04.png);
+    background: url(../../website/website/static/img/overlays/04.png);
     background-attachment: fixed
 }
 
 .pattern-5 {
-    background: url(../img/overlays/05.png);
+    background: url(../../website/website/static/img/overlays/05.png);
     background-attachment: fixed
 }
 
 .pattern-6 {
-    background: url(../img/overlays/06.png);
+    background: url(../../website/website/static/img/overlays/06.png);
     background-attachment: fixed
 }
 
 .pattern-7 {
-    background: url(../img/overlays/07.png);
+    background: url(../../website/website/static/img/overlays/07.png);
     background-attachment: fixed
 }
 
 .pattern-8 {
-    background: url(../img/overlays/08.png);
+    background: url(../../website/website/static/img/overlays/08.png);
     background-attachment: fixed
 }
 
 .pattern-9 {
-    background: url(../img/overlays/09.png);
+    background: url(../../website/website/static/img/overlays/09.png);
     background-attachment: fixed
 }
 
@@ -10603,11 +10603,11 @@ body.scrollable {
 }
 
 .carousel .carousel-control-prev-icon {
-    background-image: url(../img/svg/arrow_left.svg)
+    background-image: url(../../website/website/static/img/svg/arrow_left.svg)
 }
 
 .carousel .carousel-control-next-icon {
-    background-image: url(../img/svg/arrow_right.svg)
+    background-image: url(../../website/website/static/img/svg/arrow_right.svg)
 }
 
 .carousel .carousel-indicators li {

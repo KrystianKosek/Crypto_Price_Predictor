@@ -5,8 +5,8 @@
  * Released under the MIT license
  */
 (function (global, factory) {
-typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('chart.js')) :
-typeof define === 'function' && define.amd ? define(['chart.js'], factory) :
+typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('./chart')) :
+typeof define === 'function' && define.amd ? define(['./chart'], factory) :
 (global = global || self, global.ChartDataLabels = factory(global.Chart));
 }(this, function (Chart) { 'use strict';
 

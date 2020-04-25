@@ -3,7 +3,7 @@ import argparse
 import os
 import json
 import datetime
-from _validations import is_date_valid, code_error
+from ._validations import is_date_valid, code_error
 
 
 class Client(object):
@@ -16,6 +16,7 @@ class Client(object):
     3. Today's data of all cryptocurrencies
     """
     def __init__(self):
+        self.interval = "1d"
         self.cur_datetime = datetime.datetime.now()
         self.base_url = "https://api.coinpaprika.com/v1/"
         self.parser = argparse.ArgumentParser(description="Process requests for paprikacoin API data")
@@ -65,7 +66,8 @@ class Client(object):
         """
         if is_date_valid(start_date):
             get_coin_history_url = "/".join((self.base_url, 'tickers', coin_id, 'historical'))
-            coin_history = requests.get(url=get_coin_history_url, params={"start": start_date})
+            coin_history = requests.get(url=get_coin_history_url, params={"start": start_date,
+                                                                          "interval": self.interval})
             code_error(coin_history.status_code)
             filename = "{}_from_{}_to_{}.json".format(coin_id, start_date, self.cur_datetime.strftime("%Y-%m-%d"))
             self._save_json(coin_history, filename)

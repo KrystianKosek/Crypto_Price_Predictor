@@ -1,5 +1,5 @@
 import datetime
-from _exceptions import *
+from ._exceptions import *
 
 
 def is_date_valid(date: str) -> bool:
@@ -11,10 +11,10 @@ def is_date_valid(date: str) -> bool:
     """
     valid = True
     yy, mm, dd = date.split('-')
-
     try:
-        datetime.datetime(int(yy), int(dd), int(mm))
+        datetime.datetime(int(yy), int(mm), int(dd))
     except ValueError as e:
+        print(e)
         valid = False
 
     return valid

@@ -1,0 +1,5 @@
+django
+seaborn
+matplotlib
+pandas
+requests

@@ -7,8 +7,8 @@ from paprika_client.client import *
 def index(request):
     coin1_id = 'btc-bitcoin'
     coin2_id = 'miota-iota'
-    update_data.update_coin(coin1_id)
-    update_data.update_coin(coin2_id)
+   # update_data.update_coin(coin1_id)
+   # update_data.update_coin(coin2_id)
 
     path1 = make_plots.last_month(coin1_id)
     path2 = make_plots.last_month(coin2_id)

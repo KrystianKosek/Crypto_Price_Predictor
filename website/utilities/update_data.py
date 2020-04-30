@@ -20,6 +20,8 @@ def update_coin(coin_id: str) -> None:
         now = datetime.datetime.now()
         last_data = datetime.datetime(year=now.year, month=now.month - 1, day=now.day)
 
-    if last_data.date() != (datetime.datetime.now() + datetime.timedelta(days=-1)).date():
+    yesterday = datetime.datetime.now() + datetime.timedelta(days=-1)
+
+    if not last_data.date() == yesterday.date():
         client = Client()
         client.coin_history(coin_id, (last_data + datetime.timedelta(days=1)).strftime("%Y-%m-%d"))

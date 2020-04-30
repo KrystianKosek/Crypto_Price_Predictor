@@ -1,5 +1,6 @@
-from django.db import models
 import datetime
+
+from django.db import models
 
 
 class Coin(models.Model):
@@ -9,6 +10,10 @@ class Coin(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.coin_id, self.datetime_stamp)
+
+    @staticmethod
+    def delete_coins():
+        Coin.objects.all().delete()
 
     @staticmethod
     def delete_coins():

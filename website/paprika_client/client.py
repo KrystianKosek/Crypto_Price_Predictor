@@ -17,7 +17,7 @@ class Client(object):
     3. Today's data of all cryptocurrencies
     """
     def __init__(self):
-        self.interval = "1d"
+        self.interval = "1h"
         self.cur_datetime = datetime.datetime.now()
         self.base_url = "https://api.coinpaprika.com/v1/"
         self.parser = argparse.ArgumentParser(description="Process requests for paprikacoin API data")
@@ -43,7 +43,6 @@ class Client(object):
     def today_coin(self, coin_id: str) -> None:
         """
         Fetch current data of specific cryptocurrency (coin_id)
-        Save to file in format {coin_id}_{current_date}.json
         Parameters:
             coin_id: string-like id of specific coin
         Returns:

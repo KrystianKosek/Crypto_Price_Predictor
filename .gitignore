@@ -1,0 +1,4 @@
+website/db.sqlite3
+.idea/
+venv/
+crypto/migrations/

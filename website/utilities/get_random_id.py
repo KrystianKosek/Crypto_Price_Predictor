@@ -3,8 +3,8 @@ import random
 
 import pandas as pd
 
-from paprika_client.client import *
-from crypto.models import *
+from paprika_client.client import Client
+from crypto.models import Coin
 
 
 def get_random_id() -> str:

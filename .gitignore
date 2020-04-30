@@ -7,3 +7,14 @@
 # Editor-based HTTP Client requests
 /httpRequests/
 /.idea/
+/venv/
+paprika_client/__pycache__/
+website/crypto/__pycache__/
+website/crypto/migrations/__pycache__/
+website/data/all_coins_2020-04-30.json
+website/data/ltc-litecoin_from_2020-03-30_to_2020-04-30.json
+website/data/vet-vechain_from_2020-03-30_to_2020-04-30.json
+website/data/xem-nem_from_2020-03-30_to_2020-04-30.json
+website/data/xvg-verge_from_2020-03-30_to_2020-04-30.json
+website/utilities/__pycache__/
+website/website/__pycache__/

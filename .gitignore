@@ -18,3 +18,5 @@ website/data/xem-nem_from_2020-03-30_to_2020-04-30.json
 website/data/xvg-verge_from_2020-03-30_to_2020-04-30.json
 website/utilities/__pycache__/
 website/website/__pycache__/
+website/paprika_client/__pycache__/
+website/paprika_client/tests/

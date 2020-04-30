@@ -4,6 +4,7 @@ import os
 import json
 import datetime
 from ._validations import is_date_valid, code_error
+from crypto.models import *
 
 
 class Client(object):
@@ -100,6 +101,9 @@ class Client(object):
         with open(f"data/{filename}", 'w') as fp:
             json.dump(data.json(), fp)
 
+    @staticmethod
+    def _save_database(data: requests.request) -> None:
+        pass
 
 if __name__ == '__main__':
     client = Client()

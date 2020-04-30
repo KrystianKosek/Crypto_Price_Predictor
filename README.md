@@ -11,10 +11,7 @@ Track our project on:
 https://crypto-pred-test.herokuapp.com/
 ## Weekly plan :
    ### Week 1 (01.05 - 07.05)
-Week one goal is to create cryptocurrencies database. We are going to eliminate JSON file usage for saving cryptocurrencies data in paprika_client. Instead of this we are going to directly update database. We also are going to draw charts based on data from database.
-
-Stworzenie bazy danych kryptowalut i aktualizowanie ich na bieżąco (wyeliminowanie korzystania zapisywania JSON), tworzenie wykresów z bazy, wyświetlanie N kryptowalut na głównej. Dodanie funkcjonalności wyboru waluty jaką prezentujemy, np. złótówki
-
+Week one goal is to create cryptocurrencies database. We are going to eliminate JSON file usage for saving cryptocurrencies data in paprika_client. Instead of this we are going to directly update database. We also are going to draw charts based on data from database. What more we want to display N number of cryptocurrencies on the home page and add functionality of choosing currency that is cryptocurrency diplayed in.
    ### Week 2 (07.05 - 14.05)
 Dodanie dedykowanych podstron dających możliwość przeglądania detali danych kryptowalut, mechanizm wyszukiwania na głównej, każda kryptowaluta prezentowana na głównej ma mieć możliwość kliknięcia w nią w celu przekierowania na dedykowaną stronę. W tym momencie nasza aplikacja będzie w połowie gotowa, będzie działała jak przeglądarka do kryptowalut. Pod koniec tygodnia zajmiemy się testami i sprawdzimy czy nie ma błędów.
    ### Week 3 (14.05 - 21.05) 

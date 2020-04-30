@@ -16,7 +16,6 @@ def last_month(coin_id: str) -> str:
     now = datetime.datetime.now()
     month_ealier = datetime.datetime(year=now.year, month=now.month - 1, day=now.day)
     filenames = glob.glob("data/*.json")
-    needle = "{}_from_{}_to_{}.json".format(coin_id, month_ealier.strftime("%Y-%m-%d"), now.strftime("%Y-%m-%d"))
     needle = '/'.join(('data', needle))
     if needle not in filenames:
         client = Client()

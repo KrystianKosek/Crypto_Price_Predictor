@@ -4,6 +4,7 @@ import random
 import pandas as pd
 
 from paprika_client.client import *
+from crypto.models import *
 
 
 def get_random_id() -> str:

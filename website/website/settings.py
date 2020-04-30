@@ -26,7 +26,7 @@ SECRET_KEY = '9uk(fwys)wcu_*wt35cbzph!i_e64r)r1#d-0*&cv^iinos*ik'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["crypto-pred-test.herokuapp.com", "127.0.0.1"]
 
 
 # Application definition

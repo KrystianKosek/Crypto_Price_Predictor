@@ -1,11 +1,13 @@
 from django.http import HttpResponse
 from django.template import loader
 from utilities import make_plots, get_random_id
+from paprika_client.client import *
 
 
 def index(request):
-    # coin1_id = get_random_id.get_random_id()
-    # coin2_id = get_random_id.get_random_id()
+    client = Client()
+    coin1_id = get_random_id.get_random_id()
+    coin2_id = get_random_id.get_random_id()
     #
     # path1 = make_plots.last_month(coin1_id)
     # path2 = make_plots.last_month(coin2_id)

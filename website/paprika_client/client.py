@@ -58,7 +58,7 @@ class Client(object):
     def coin_history(self, coin_id: str, start_date: str) -> None:
         """
         Fetch historical data of specific cryptocurrency (coin_id), from start_date
-        Save to file {coin_id}_from_{start_date}_to_{current_date}.json
+        Save to django database ( modified from orginal )
         Parameters:
             coin_id: string-like id of specific coin
             start_date: string-like date formated "YYYY-MM-DD"
@@ -70,8 +70,7 @@ class Client(object):
             coin_history = requests.get(url=get_coin_history_url, params={"start": start_date,
                                                                           "interval": self.interval})
             code_error(coin_history.status_code)
-            filename = "{}_from_{}_to_{}.json".format(coin_id, start_date, self.cur_datetime.strftime("%Y-%m-%d"))
-            self._save_json(coin_history, filename)
+            self._save_database(coin_history.json(), coin_id)
 
     def all_today_coins(self) -> None:
         """
@@ -83,8 +82,7 @@ class Client(object):
         get_all_coins_url = "/".join((self.base_url, 'tickers'))
         all_daily_coins = requests.get(url=get_all_coins_url)
         code_error(all_daily_coins.status_code)
-        filename = "all_coins_{}.json".format(self.cur_datetime.strftime("%Y-%m-%d"))
-        self._save_json(all_daily_coins, filename)
+        self._save_database(all_daily_coins, 'history')
 
 
     @staticmethod
@@ -102,8 +100,20 @@ class Client(object):
             json.dump(data.json(), fp)
 
     @staticmethod
-    def _save_database(data: requests.request) -> None:
-        pass
+    def _save_database(data: requests.request, id: str) -> None:
+        """
+            Save data to database ( new method )
+            Parameters:
+                data: request.request - object that contains response from requests.get
+                filename: str
+        """
+        for coin in data:
+            new_coin = Coin()
+            new_coin.price = coin['price']
+            new_coin.coin_id = id
+            new_coin.datetime_stamp = coin['timestamp']
+            new_coin.save()
+
 
 if __name__ == '__main__':
     client = Client()

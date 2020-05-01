@@ -1,12 +1,12 @@
-import matplotlib.pyplot as plt
-import seaborn as sns
 import datetime
 import os
 import numpy as np
 
-from utilities._exceptions import FilterError
-from paprika_client.client import Client
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
 from crypto.models import Coin
+from utilities._exceptions import FilterError
 
 
 def clean_image_dir(curr_date: str) -> None:
@@ -17,7 +17,7 @@ def clean_image_dir(curr_date: str) -> None:
     Returns:
         None
     """
-    dirname = "crypto/static/img/last_month"
+    dirname = "crypto/static/img/last_month/"
     images = os.listdir(dirname)
     for image in images:
         if image.split('_')[-1] != curr_date.strftime("%Y-%m-%d") + ".png":
@@ -53,4 +53,3 @@ def last_month(coin_id: str) -> str:
 
     clean_image_dir(now)
     return "static/img/last_month/{}".format(os.path.basename(filename))
-

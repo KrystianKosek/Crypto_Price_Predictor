@@ -101,17 +101,20 @@ class Client(object):
     @staticmethod
     def _save_database(data: requests.request, id: str) -> None:
         """
+            Check if new coin is already included in database
             Save data to database ( new method )
             Parameters:
                 data: request.request - object that contains response from requests.get
                 filename: str
         """
         for coin in data:
-            new_coin = Coin()
-            new_coin.price = coin['price']
-            new_coin.coin_id = id
-            new_coin.datetime_stamp = coin['timestamp']
-            new_coin.save()
+            already_in_db = Coin.objects.filter(datetime_stamp=coin['timestamp'], price=coin['price'], coin_id=id)
+            if not already_in_db:
+                new_coin = Coin()
+                new_coin.price = coin['price']
+                new_coin.coin_id = id
+                new_coin.datetime_stamp = coin['timestamp']
+                new_coin.save()
 
 
 if __name__ == '__main__':

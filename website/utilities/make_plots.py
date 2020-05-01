@@ -16,7 +16,7 @@ def clean_image_dir(curr_date: str) -> None:
     Returns:
         None
     """
-    dirname = "crypto/static/img/last_month"
+    dirname = "crypto/static/img/last_month/"
     images = os.listdir(dirname)
     for image in images:
         if image.split('_')[-1] != curr_date.strftime("%Y-%m-%d") + ".png":

@@ -18,6 +18,8 @@ class Client(object):
     """
     def __init__(self):
         self.interval = "1h"
+        self.now = datetime.datetime.now()
+
         self.cur_datetime = datetime.datetime.now()
         self.base_url = "https://api.coinpaprika.com/v1/"
         self.parser = argparse.ArgumentParser(description="Process requests for paprikacoin API data")
@@ -81,7 +83,7 @@ class Client(object):
         get_all_coins_url = "/".join((self.base_url, 'tickers'))
         all_daily_coins = requests.get(url=get_all_coins_url)
         code_error(all_daily_coins.status_code)
-        self._save_database(all_daily_coins, 'history')
+        self._save_database(all_daily_coins.json(), 'all')
 
 
     @staticmethod
@@ -98,20 +100,28 @@ class Client(object):
         with open(f"data/{filename}", 'w') as fp:
             json.dump(data.json(), fp)
 
-    @staticmethod
-    def _save_database(data: requests.request, id: str) -> None:
+    def _save_database(self, data: requests.request, id: str) -> None:
         """
             Save data to database ( new method )
             Parameters:
                 data: request.request - object that contains response from requests.get
                 filename: str
         """
-        for coin in data:
-            new_coin = Coin()
-            new_coin.price = coin['price']
-            new_coin.coin_id = id
-            new_coin.datetime_stamp = coin['timestamp']
-            new_coin.save()
+        if id == 'all':
+            ctr = 0
+            samples = len(data)
+            for coin in data:
+                month_ealier = datetime.datetime(year=self.now.year, month=self.now.month - 1, day=self.now.day)
+                self.coin_history(coin['id'], month_ealier.strftime("%Y-%m-%d"))
+                ctr += 1
+                print("downloaded {} progress: {}/{}".format(coin['id'], ctr, samples))
+        else:
+            for coin in data:
+                new_coin = Coin()
+                new_coin.price = coin['price']
+                new_coin.coin_id = id
+                new_coin.datetime_stamp = coin['timestamp']
+                new_coin.save()
 
 
 if __name__ == '__main__':

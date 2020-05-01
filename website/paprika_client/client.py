@@ -56,6 +56,23 @@ class Client(object):
         filename = "{}_{}.json".format(coin_id, self.cur_datetime.strftime("%Y-%m-%d"))
         self._save_json(daily_coin, filename)
 
+
+    def all_today_coins(self) -> None:
+        """
+        Fetch current data of all cryptocurrencies
+        Save to file all_coins_{current_date}.json
+        Returns:
+            None
+        """
+        get_all_coins_url = "/".join((self.base_url, 'tickers'))
+        all_daily_coins = requests.get(url=get_all_coins_url)
+        code_error(all_daily_coins.status_code)
+        Coin.delete_coins()
+        CoinForTable.delete_coins()
+        self._save_database2(all_daily_coins.json())
+        self._save_database(all_daily_coins.json(), "all")
+
+
     def coin_history(self, coin_id: str, start_date: str) -> None:
         """
         Fetch historical data of specific cryptocurrency (coin_id), from start_date
@@ -72,18 +89,6 @@ class Client(object):
                                                                           "interval": self.interval})
             code_error(coin_history.status_code)
             self._save_database(coin_history.json(), coin_id)
-
-    def all_today_coins(self) -> None:
-        """
-        Fetch current data of all cryptocurrencies
-        Save to file all_coins_{current_date}.json
-        Returns:
-            None
-        """
-        get_all_coins_url = "/".join((self.base_url, 'tickers'))
-        all_daily_coins = requests.get(url=get_all_coins_url)
-        code_error(all_daily_coins.status_code)
-        self._save_database(all_daily_coins.json(), 'all')
 
 
     @staticmethod
@@ -122,6 +127,19 @@ class Client(object):
                 new_coin.coin_id = id
                 new_coin.datetime_stamp = coin['timestamp']
                 new_coin.save()
+
+
+    def _save_database2(self, data: requests.request) -> None:
+        for coin in data:
+            new_coin = CoinForTable()
+            new_coin.price = coin["quotes"]["USD"]["price"]
+            new_coin.coin_id = coin["name"]
+            new_coin.percent_change_24h = coin["quotes"]["USD"]['percent_change_24h']
+            new_coin.percent_change_7d = coin["quotes"]["USD"]['percent_change_7d']
+            new_coin.percent_change_30d = coin["quotes"]["USD"]['percent_change_30d']
+
+            new_coin.datetime_stamp = coin['last_updated']
+            new_coin.save()
 
 
 if __name__ == '__main__':

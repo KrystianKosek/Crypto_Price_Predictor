@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import datetime
 import os
+import numpy as np
 
 from utilities._exceptions import FilterError
 from paprika_client.client import Client
@@ -40,9 +41,9 @@ def last_month(coin_id: str) -> str:
         last_month_coins = Coin.objects.filter(coin_id=coin_id, datetime_stamp__range=[month_ealier, now])
         if not last_month_coins:
             raise FilterError("Not found {} data from last month".format(coin_id))
-        datetime_stamps = last_month_coins.values_list('datetime_stamp', flat=True)
         prices = last_month_coins.values_list('price', flat=True)
         plt.style.use("seaborn-whitegrid")
+        datetime_stamps = np.arange(len(prices))
         plt.figure(figsize=(16, 8))
         sns.lineplot(datetime_stamps, prices)
         plt.ylabel("Price [USD]")

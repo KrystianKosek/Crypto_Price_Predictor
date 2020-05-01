@@ -16,10 +16,11 @@ def update_coin(coin_id: str) -> None:
     """
     try:
         last_data = Coin.objects.filter(coin_id=coin_id).order_by('-datetime_stamp')[0].datetime_stamp
-    except FilterError:
+    except (IndexError, TypeError):
         now = datetime.datetime.now()
         last_data = datetime.datetime(year=now.year, month=now.month - 1, day=now.day)
 
     if last_data.date() != (datetime.datetime.now() + datetime.timedelta(days=-1)).date():
         client = Client()
         client.coin_history(coin_id, (last_data + datetime.timedelta(days=1)).strftime("%Y-%m-%d"))
+

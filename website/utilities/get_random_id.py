@@ -1,23 +1,17 @@
-import glob
-import random
-
-import pandas as pd
-
+from random import shuffle
 from paprika_client.client import Client
 from crypto.models import Coin
 
 
-def get_random_id() -> str:
+def get_random_id() -> tuple:
     """
-    Fetch data of all today currencies if needed and return one randomly chosen coin_id
+    Generate two random coin_id from coins existing in database
+    Parameters:
+        None
+    Returns
+        tuple: coin_id1, coin_id2
     """
-    now = datetime.datetime.now()
-    filenames = glob.glob("data/*.json")
-    needle = "all_coins_{}.json".format(now.strftime("%Y-%m-%d"))
-    needle = '/'.join(('data', needle))
-    if needle not in filenames:
-        client = Client()
-        client.all_today_coins()
-
-    tickers = pd.read_json(needle)
-    return tickers['id'][random.randint(0, len(needle))]
+    all_coins = Coin.objects.values_list('coin_id', flat=True).distinct()
+    all_coins = list(all_coins)
+    shuffle(all_coins)
+    return all_coins.pop(), all_coins.pop()

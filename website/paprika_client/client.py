@@ -67,9 +67,9 @@ class Client(object):
         get_all_coins_url = "/".join((self.base_url, 'tickers'))
         all_daily_coins = requests.get(url=get_all_coins_url)
         code_error(all_daily_coins.status_code)
-        Coin.delete_coins()
+        #Coin.delete_coins()
         CoinForTable.delete_coins()
-        self._save_database2(all_daily_coins.json())
+        self._save_database(all_daily_coins.json(), "CoinForTable")
         self._save_database(all_daily_coins.json(), "all")
 
 
@@ -120,6 +120,17 @@ class Client(object):
                 self.coin_history(coin['id'], month_ealier.strftime("%Y-%m-%d"))
                 ctr += 1
                 print("downloaded {} progress: {}/{}".format(coin['id'], ctr, samples))
+        elif id == 'CoinForTable':
+            for coin in data:
+                new_coin = CoinForTable()
+                new_coin.price = coin["quotes"]["USD"]["price"]
+                new_coin.coin_id = coin["name"]
+                new_coin.percent_change_24h = coin["quotes"]["USD"]['percent_change_24h']
+                new_coin.percent_change_7d = coin["quotes"]["USD"]['percent_change_7d']
+                new_coin.percent_change_30d = coin["quotes"]["USD"]['percent_change_30d']
+
+                new_coin.datetime_stamp = coin['last_updated']
+                new_coin.save()
         else:
             for coin in data:
                 new_coin = Coin()
@@ -127,20 +138,6 @@ class Client(object):
                 new_coin.coin_id = id
                 new_coin.datetime_stamp = coin['timestamp']
                 new_coin.save()
-
-
-    def _save_database2(self, data: requests.request) -> None:
-        for coin in data:
-            new_coin = CoinForTable()
-            new_coin.price = coin["quotes"]["USD"]["price"]
-            new_coin.coin_id = coin["name"]
-            new_coin.percent_change_24h = coin["quotes"]["USD"]['percent_change_24h']
-            new_coin.percent_change_7d = coin["quotes"]["USD"]['percent_change_7d']
-            new_coin.percent_change_30d = coin["quotes"]["USD"]['percent_change_30d']
-
-            new_coin.datetime_stamp = coin['last_updated']
-            new_coin.save()
-
 
 if __name__ == '__main__':
     client = Client()

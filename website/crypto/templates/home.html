@@ -38,10 +38,13 @@
             <h1 class="navbar-brand" href="#">Crypto Price Predictor</h1>
             <div class="container-fluid position">
 
-                <!-- Default checked -->
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
-                    <label class="custom-control-label" for="customSwitch1">Switch Currency</label>
+                <!-- Choose currency -->
+                <div class="input-field col s1">
+                    <select id="curr">
+                          <option value="usd" selected>USD</option>
+                          <option value="pln">PLN</option>
+                        </select>
+                    <label>Currency</label>
                 </div>
 
                 <!--Navbar-->
@@ -110,10 +113,10 @@
                     <tr>
                         <th scope="row">{{t.id}}</th>
                         <td><a href="https://youtube.com/">{{t.name}}</a></td>
-                        <td><a href="https://youtube.com/">{{t.price}}</a></td>
-                        <td><a href="https://youtube.com/">{{t.percent_change_24h}}</a></td>
-                        <td><a href="https://youtube.com/">{{t.percent_change_7d}}</a></td>
-                        <td><a href="https://youtube.com/">{{t.percent_change_30d}}</a></td>
+                        <td><a class="price" data-usd={{t.price_USD}} data-pln={{t.price_PLN}}>{{t.price_USD}}</a></td>
+                        <td><a href="https://youtube.com/" style="color:{{t.24h_color}}">{{t.percent_change_24h}}</a></td>
+                        <td><a href="https://youtube.com/" style="color:{{t.7d_color}}">{{t.percent_change_7d}}</a></td>
+                        <td><a href="https://youtube.com/" style="color:{{t.30d_color}}">{{t.percent_change_30d}}</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -163,6 +166,23 @@
 
     <!--Dynamic Veritcal Table Script-->
     <script type="text/javascript" src="{% static "js/table_script.js" %}"></script>
+
+    <script>
+        $(function() {
+          $("#curr").on("change",function() {
+            var curr   = this.value;
+            var prefix = curr=="usd"; // or ["usd","yen",...].indexOf(curr); for more
+            var sign   = curr=="usd"?"$":"zł";
+            $(".price").each(function(){
+              $(this).text(
+                (prefix?sign:"")   +
+                $(this).data(curr) +
+                (prefix?"":sign)
+              );
+            })
+          }).change();
+        });
+    </script>
 
 </body>
 

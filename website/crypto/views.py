@@ -19,10 +19,33 @@ def index(request):
                "plot_path1": path1, "plot_path2": path2}
 
     all_cryptos = CoinForTable.objects.all()
+
+    pln_course = Currency.objects.filter(currency_name = "PLN")[0]
     mapa = []
     i = 1
     for x in all_cryptos:
-        mapa.append({"id":i, "name": x.coin_id, "price": x.price, "percent_change_24h": x.percent_change_24h, "percent_change_7d": x.percent_change_7d, "percent_change_30d": x.percent_change_30d})
+        mapa.append({"id":i, "name": x.coin_id, "price_USD": x.price, "price_PLN": x.price * pln_course.rate, "percent_change_24h": x.percent_change_24h, "percent_change_7d": x.percent_change_7d, "percent_change_30d": x.percent_change_30d})
+        if x.percent_change_24h < 0:
+            mapa[i - 1].update({"24h_color": "red"})
+        elif x.percent_change_24h > 0:
+            mapa[i - 1].update({"24h_color": "green"})
+        else:
+            mapa[i - 1].update({"24h_color": "black"})
+
+        if x.percent_change_7d < 0:
+            mapa[i - 1].update({"7d_color": "red"})
+        elif x.percent_change_7d > 0:
+            mapa[i - 1].update({"7d_color": "green"})
+        else:
+            mapa[i - 1].update({"7d_color": "black"})
+
+        if x.percent_change_30d < 0:
+            mapa[i - 1].update({"30d_color": "red"})
+        elif x.percent_change_30d > 0:
+            mapa[i - 1].update({"30d_color": "green"})
+        else:
+            mapa[i - 1].update({"30d_color": "black"})
+
         i += 1
 
     context.update({"table": mapa})

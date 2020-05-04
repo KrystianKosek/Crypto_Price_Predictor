@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-
+{% static "" as staticUrl %}
 <html lang="en">
 
 <head>
@@ -77,12 +77,12 @@
     <section class="charts-section">
 
         <figure>
-            <img src="{{plot_path1}}" class="img-fluid" alt="Responsive image">
+            <img src="{{ staticUrl }}/{{ plot_path1 }}" class="img-fluid" alt="Responsive image">
             <figcaption>{{ img1_name }}</figcaption>
         </figure>
 
         <figure>
-            <img src="{{plot_path2}}" class="img-fluid" alt="Responsive image">
+            <img src="{{ staticUrl }}/{{ plot_path2 }}" class="img-fluid" alt="Responsive image">
             <figcaption>{{ img2_name }}</figcaption>
         </figure>
 
@@ -112,11 +112,11 @@
                 {% for t in table %}
                     <tr>
                         <th scope="row">{{t.id}}</th>
-                        <td><a href="https://youtube.com/">{{t.name}}</a></td>
+                        <td><a href="/coin/{{ t.name }}">{{t.name}}</a></td>
                         <td><a class="price" data-usd={{t.price_USD}} data-pln={{t.price_PLN}}>{{t.price_USD}}</a></td>
-                        <td><a href="https://youtube.com/" style="color:{{t.24h_color}}">{{t.percent_change_24h}}</a></td>
-                        <td><a href="https://youtube.com/" style="color:{{t.7d_color}}">{{t.percent_change_7d}}</a></td>
-                        <td><a href="https://youtube.com/" style="color:{{t.30d_color}}">{{t.percent_change_30d}}</a></td>
+                        <td><a href="#" style="color:{{t.24h_color}}">{{t.percent_change_24h}}</a></td>
+                        <td><a href="#" style="color:{{t.7d_color}}">{{t.percent_change_7d}}</a></td>
+                        <td><a href="#" style="color:{{t.30d_color}}">{{t.percent_change_30d}}</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

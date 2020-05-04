@@ -4,7 +4,7 @@ import os
 import json
 import datetime
 from ._validations import is_date_valid, code_error
-from crypto.models import *
+from coin.models import Coin, CoinForTable
 
 
 class Client(object):
@@ -56,7 +56,6 @@ class Client(object):
         filename = "{}_{}.json".format(coin_id, self.cur_datetime.strftime("%Y-%m-%d"))
         self._save_json(daily_coin, filename)
 
-
     def all_today_coins(self) -> None:
         """
         Fetch current data of all cryptocurrencies
@@ -67,11 +66,9 @@ class Client(object):
         get_all_coins_url = "/".join((self.base_url, 'tickers'))
         all_daily_coins = requests.get(url=get_all_coins_url)
         code_error(all_daily_coins.status_code)
-        #Coin.delete_coins()
         CoinForTable.delete_coins()
         self._save_database(all_daily_coins.json(), "CoinForTable")
-        self._save_database(all_daily_coins.json(), "all")
-
+        # self._save_database(all_daily_coins.json(), "all")
 
     def coin_history(self, coin_id: str, start_date: str) -> None:
         """
@@ -112,7 +109,7 @@ class Client(object):
                 data: request.request - object that contains response from requests.get
                 filename: str
         """
-        if id == 'all':
+        if id == 'All-Historical':
             ctr = 0
             samples = len(data)
             for coin in data:
@@ -124,7 +121,9 @@ class Client(object):
             for coin in data:
                 new_coin = CoinForTable()
                 new_coin.price = coin["quotes"]["USD"]["price"]
-                new_coin.coin_id = coin["name"]
+                new_coin.coin_id = coin["id"]
+                new_coin.rank = coin["rank"]
+                new_coin.name = coin["name"]
                 new_coin.percent_change_24h = coin["quotes"]["USD"]['percent_change_24h']
                 new_coin.percent_change_7d = coin["quotes"]["USD"]['percent_change_7d']
                 new_coin.percent_change_30d = coin["quotes"]["USD"]['percent_change_30d']
@@ -138,6 +137,7 @@ class Client(object):
                 new_coin.coin_id = id
                 new_coin.datetime_stamp = coin['timestamp']
                 new_coin.save()
+
 
 if __name__ == '__main__':
     client = Client()

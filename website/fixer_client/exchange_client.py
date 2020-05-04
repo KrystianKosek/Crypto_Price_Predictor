@@ -4,7 +4,8 @@ import os
 import datetime
 from crypto.models import Currency
 
-class Exchange_client():
+
+class ExchangeClient():
     # client made for getting currency rate from fixer api
     def __init__(self):
         self.url = "http://data.fixer.io/api/latest"
@@ -58,6 +59,7 @@ class Exchange_client():
         with open("data/rate.json", 'w') as f:
             json.dump(data, f)
 
+
 if __name__ == "__main__":
-    exchange = Exchange_client()
+    exchange = ExchangeClient()
     exchange.process()

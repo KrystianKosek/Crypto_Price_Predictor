@@ -4,6 +4,7 @@ import os
 import datetime
 from crypto.models import Currency
 
+
 class Exchange_client():
     # client made for getting currency rate from fixer api
     def __init__(self):
@@ -29,19 +30,19 @@ class Exchange_client():
 
         rate_dict = {"rate": self.rate, "name": currency_name}
         self.save_to_database(rate_dict)
-        #self.save_to_json(rate_dict)
+        # self.save_to_json(rate_dict)
         return rate_dict
 
     # method processing get function for chosen currency
     # default currency is PLN
-    def process(self,currency: str = "PLN") -> None:
+    def process(self, currency: str = "PLN") -> None:
         self.get_exchange_rate(currency)
 
     # converts value in dollars to other currency set in client
-    def convert_currency(self,value: float) -> float:
-        return value*self.rate
+    def convert_currency(self, value: float) -> float:
+        return value * self.rate
 
-    def save_to_database(self,data: dict) -> None:
+    def save_to_database(self, data: dict) -> None:
         new_currency_rate = Currency()
         new_currency_rate.currency_name = data["name"]
         new_currency_rate.rate = data["rate"]
@@ -50,6 +51,7 @@ class Exchange_client():
         new_currency_rate.save()
 
     # saves current rate to json
+
     # example file look: {"rate": 4.0, "name": "PLN"}
     @staticmethod
     def save_to_json(data: dict) -> None:
@@ -57,6 +59,7 @@ class Exchange_client():
             os.mkdir("data")
         with open("data/rate.json", 'w') as f:
             json.dump(data, f)
+
 
 if __name__ == "__main__":
     exchange = Exchange_client()

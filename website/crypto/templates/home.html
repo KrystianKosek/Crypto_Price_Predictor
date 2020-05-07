@@ -10,7 +10,7 @@
 
     <!--Obligatory bootstrap includes-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
@@ -31,158 +31,138 @@
 </head>
 
 <body>
-    <!--Header section-->
-    <header>
-        <!--Navigation bar-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <h1 class="navbar-brand" href="#">Crypto Price Predictor</h1>
-            <div class="container-fluid position">
+<!--Header section-->
+<header>
+    <!--Navigation bar-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <h1 class="navbar-brand" href="#">Crypto Price Predictor</h1>
+        <div class="container-fluid position">
 
-                <!-- Choose currency -->
-                <div class="input-field col s1">
-                    <select id="curr">
-                          <option value="usd" selected>USD</option>
-                          <option value="pln">PLN</option>
-                        </select>
-                    <label>Currency</label>
-                </div>
-
-                <!--Navbar-->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            <!--Navbar-->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <!--Options as a list-->
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Home </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
-                        </li>
-                    </ul>
-                </div>
+            <!--Options as a list-->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                </ul>
+                <!-- Choose currency -->
+                <a>Currency:</a>
+                <select id="curr">
+                    <option value="usd" selected>USD</option>
+                    <option value="pln">PLN</option>
+                </select>
             </div>
+        </div>
+    </nav>
+</header>
 
-            </div>
-        </nav>
-    </header>
+<!--Main section with 2 charts-->
+<section class="charts-section">
 
-    <!--Main section with 2 charts-->
-    <section class="charts-section">
+    <figure>
+        <img src="{{ plot_path1 }}" class="img-fluid" alt="Responsive image">
+        <figcaption>{{ img1_name }}</figcaption>
+    </figure>
 
-        <figure>
-            <img src="{{plot_path1}}" class="img-fluid" alt="Responsive image">
-            <figcaption>{{ img1_name }}</figcaption>
-        </figure>
+    <figure>
+        <img src="{{ plot_path2 }}" class="img-fluid" alt="Responsive image">
+        <figcaption>{{ img2_name }}</figcaption>
+    </figure>
 
-        <figure>
-            <img src="{{plot_path2}}" class="img-fluid" alt="Responsive image">
-            <figcaption>{{ img2_name }}</figcaption>
-        </figure>
+</section>
 
-    </section>
-
-    <!--Main section with table of cryptocurencies-->
-    <section class="table-section">
-        <table id="dtDynamicVerticalScrollExample" class="table table-striped table-bordered table-sm" cellspacing="0"
-            width="100%">
-            <thead>
-                <tr>
-                    <th class="th-sm">#
-                    </th>
-                    <th class="th-sm">Crypto
-                    </th>
-                    <th class="th-sm">Price
-                    </th>
-                    <th class="th-sm">Percent_change_24h
-                    </th>
-                    <th class="th-sm">Percent_change_7d
-                    </th>
-                    <th class="th-sm">Percent_change_30d
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for t in table %}
-                    <tr>
-                        <th scope="row">{{t.id}}</th>
-                        <td><a href="https://youtube.com/">{{t.name}}</a></td>
-                        <td><a class="price" data-usd={{t.price_USD}} data-pln={{t.price_PLN}}>{{t.price_USD}}</a></td>
-                        <td><a href="https://youtube.com/" style="color:{{t.24h_color}}">{{t.percent_change_24h}}</a></td>
-                        <td><a href="https://youtube.com/" style="color:{{t.7d_color}}">{{t.percent_change_7d}}</a></td>
-                        <td><a href="https://youtube.com/" style="color:{{t.30d_color}}">{{t.percent_change_30d}}</a></td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th class="th-sm">#
-                    </th>
-                    <th class="th-sm">Crypto
-                    </th>
-                    <th class="th-sm">Price
-                    </th>
-                    <th class="th-sm">Percent_change_24h
-                    </th>
-                    <th class="th-sm">Percent_change_7d
-                    </th>
-                    <th class="th-sm">Percent_change_30d
-                    </th>
-                </tr>
-            </tfoot>
-        </table>
-    </section>
+<!--Main section with table of cryptocurencies-->
+<section class="table-section">
+    <table id="dtDynamicVerticalScrollExample" class="table table-striped table-bordered table-sm" cellspacing="0"
+           width="100%">
+        <thead>
+        <tr>
+            <th class="th-sm">#
+            </th>
+            <th class="th-sm">Crypto
+            </th>
+            <th class="th-sm">Price
+            </th>
+            <th class="th-sm">Percent_change_24h
+            </th>
+            <th class="th-sm">Percent_change_7d
+            </th>
+            <th class="th-sm">Percent_change_30d
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for t in table %}
+            <tr>
+                <th scope="row">{{ t.id }}</th>
+                <td><a href="https://youtube.com/">{{ t.name }}</a></td>
+                <td><a class="price" data-usd={{ t.price_USD }} data-pln={{ t.price_PLN }}>{{ t.price_USD }}</a></td>
+                <td><a href="https://youtube.com/" style="color:{{ t.24h_color }}">{{ t.percent_change_24h }}</a></td>
+                <td><a href="https://youtube.com/" style="color:{{ t.7d_color }}">{{ t.percent_change_7d }}</a></td>
+                <td><a href="https://youtube.com/" style="color:{{ t.30d_color }}">{{ t.percent_change_30d }}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th class="th-sm">#
+            </th>
+            <th class="th-sm">Crypto
+            </th>
+            <th class="th-sm">Price
+            </th>
+            <th class="th-sm">Percent_change_24h
+            </th>
+            <th class="th-sm">Percent_change_7d
+            </th>
+            <th class="th-sm">Percent_change_30d
+            </th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
 
 
-    <!--Just basic footer section with some bullshits-->
-    <footer>
-        <a>© 2020 Pytonowi Wąsacze, Inc.</a>
-    </footer>
+<!--Just basic footer section with some bullshits-->
+<footer>
+    <a>© 2020 Pytonowi Wąsacze, Inc.</a>
+</footer>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+<!-- Bootstrap core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-    <script type="text/javascript" src="{% static "js/bootstrap.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/mdb.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/bootstrap.js" %}"></script>
+<script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/mdb.min.js" %}"></script>
 
-    <!-- MDBootstrap Datatables  -->
-    <script type="text/javascript" src="{% static "js/addons/datatables.min.js" %}"></script>
+<!-- MDBootstrap Datatables  -->
+<script type="text/javascript" src="{% static "js/addons/datatables.min.js" %}"></script>
 
-    <!--Dynamic Veritcal Table Script-->
-    <script type="text/javascript" src="{% static "js/table_script.js" %}"></script>
+<!--Dynamic Veritcal Table Script-->
+<script type="text/javascript" src="{% static "js/table_script.js" %}"></script>
 
-    <script>
-        $(function() {
-          $("#curr").on("change",function() {
-            var curr   = this.value;
-            var prefix = curr=="usd"; // or ["usd","yen",...].indexOf(curr); for more
-            var sign   = curr=="usd"?"$":"zł";
-            $(".price").each(function(){
-              $(this).text(
-                (prefix?sign:"")   +
-                $(this).data(curr) +
-                (prefix?"":sign)
-              );
-            })
-          }).change();
-        });
-    </script>
+<!--Currency change script-->
+<script type="text/javascript" src="{% static "js/currency_change_script.js" %}"></script>
 
 </body>
 

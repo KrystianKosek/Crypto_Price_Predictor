@@ -19,14 +19,15 @@
 
     <!-- Material Design Bootstrap -->
     <link rel="stylesheet" href="{% static "css/mdb.min.css" %}">
-    <!-- Your custom styles (optional) -->
-    <link rel="stylesheet" href="{% static "css/style.css" %}">
 
     <!-- MDBootstrap Datatables  -->
     <link href="{% static "css/addons/datatables.min.css" %}" rel="stylesheet">
 
     <!--Home page styles-->
-    <link rel="stylesheet" href="{% static "css/home_styles.css" %}">
+    <link rel="stylesheet" href="{% static "css/custom_styles.css" %}">
+
+    <!--Charts look-->
+    <script type="text/javascript" src="{% static "js/charts_look.js" %}"></script>
 
 </head>
 
@@ -70,15 +71,12 @@
 <!--Main section with 2 charts-->
 <section class="charts-section">
 
-    <figure>
-        <img src="{{ plot_path1 }}" class="img-fluid" alt="Responsive image">
-        <figcaption>{{ img1_name }}</figcaption>
-    </figure>
-
-    <figure>
-        <img src="{{ plot_path2 }}" class="img-fluid" alt="Responsive image">
-        <figcaption>{{ img2_name }}</figcaption>
-    </figure>
+    <div class="plot" style="width:90%;">
+        <canvas id="canvas"></canvas>
+    </div>
+    <div class="plot" style="width:90%;">
+        <canvas id="canvas2"></canvas>
+    </div>
 
 </section>
 
@@ -110,7 +108,8 @@
                 <td><a class="price" data-usd={{ t.price_USD }} data-pln={{ t.price_PLN }}>{{ t.price_USD }}</a></td>
                 <td><a href="https://youtube.com/" style="color:{{ t.24h_color }}">{{ t.percent_change_24h }}</a></td>
                 <td><a href="https://youtube.com/" style="color:{{ t.7d_color }}">{{ t.percent_change_7d }}</a></td>
-                <td><a href="https://youtube.com/" style="color:{{ t.30d_color }}">{{ t.percent_change_30d }}</a></td>
+                <td><a href="https://www.youtube.com/watch?v=MjBKnlqc1zw"
+                       style="color:{{ t.30d_color }}">{{ t.percent_change_30d }}</a></td>
             </tr>
         {% endfor %}
         </tbody>
@@ -164,6 +163,94 @@
 <!--Currency change script-->
 <script type="text/javascript" src="{% static "js/currency_change_script.js" %}"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<!--Make charts based on data from views-->
+<script>
+    var config = {
+        type: 'line',
+        data: {
+            labels: [{% for i in labels %} "{{ i }}", {% endfor %}],
+            datasets: [{
+                label: "{{ coin1_id }}",
+                backgroundColor: window.chartColors.red,
+                borderColor: window.chartColors.red,
+                fill: false,
+                borderWidth: 2,
+                pointRadius: 0,
+                data: [{% for i in data %} "{{ i }}", {% endfor %}],
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                xAxes: [{
+                    display: true,
+                    ticks: {
+                        maxTicksLimit: 11
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date [YY-MM-DD]'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Price [$]'
+                    }
+                }],
+            }
+        }
+    };
+
+    var config2 = {
+        type: 'line',
+        data: {
+            labels: [{% for i in labels2 %} "{{ i }}", {% endfor %}],
+            datasets: [{
+                label: "{{ coin2_id }}",
+                backgroundColor: window.chartColors.red,
+                borderColor: window.chartColors.red,
+                fill: false,
+                borderWidth: 2,
+                pointRadius: 0,
+                data: [{% for i in data2 %} "{{ i }}", {% endfor %}],
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                xAxes: [{
+                    display: true,
+                    ticks: {
+                        maxTicksLimit: 11
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date [YY-MM-DD]'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Price [$]'
+                    }
+                }],
+            }
+        }
+    };
+
+    window.onload = function () {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        var ctx2 = document.getElementById('canvas2').getContext('2d');
+        window.myLine = new Chart(ctx, config);
+        window.myLine = new Chart(ctx2, config2);
+    };
+
+</script>
 </body>
 
 </html>

@@ -48,5 +48,21 @@ def index(request):
 
         i += 1
 
+    query_set = Coin.objects.filter(coin_id = coin2_id)
+    labels = []
+    data = []
+    for x in query_set:
+        labels.append(str(x.datetime_stamp.date()))
+        data.append(str(x.price))
+    labels2 = []
+    data2 = []
+    query_set2 = Coin.objects.filter(coin_id = coin1_id)
+    for x in query_set2:
+        labels2.append(str(x.datetime_stamp.date()))
+        data2.append(str(x.price))
+
+    context.update({"coin1_id": coin1_id, "labels": labels, "data": data})
+    context.update({"coin2_id": coin2_id, "labels2": labels2, "data2": data2})
+
     context.update({"table": mapa})
     return HttpResponse(template.render(context, request))

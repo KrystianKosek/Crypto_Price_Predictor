@@ -5,6 +5,14 @@ from paprika_client.client import *
 from utilities._exceptions import FilterError
 
 
+def update_course(name: str) -> None:
+    last_date = Currency.objects.filter(currency_name = "PLN").first().date
+    delta = datetime.timedelta(days = 1)
+    if last_date.date() == datetime.datetime.now() - delta:
+        Currency.delete_currencies()
+        cl = Exchange_client()
+        cl.get_exchange_rate(name)
+
 def update_coin(coin_id: str) -> None:
     """
     Fetch data of specified coin_id since the last fetch time.

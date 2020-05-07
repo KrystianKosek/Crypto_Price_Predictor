@@ -16,6 +16,7 @@ class Coin(models.Model):
 
 class CoinForTable(models.Model):
     coin_id = models.CharField(max_length=30, default='default')
+    coin_name = models.CharField(max_length=30, default='default')
     datetime_stamp = models.DateTimeField(default=datetime.datetime(1970, 1, 1, 0, 0, 0))
     price = models.FloatField(default=0.0)
     percent_change_24h = models.FloatField(default=0.0)

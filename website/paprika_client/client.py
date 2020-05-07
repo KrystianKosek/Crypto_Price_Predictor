@@ -1,25 +1,16 @@
 import requests
 import argparse
-import os
-import json
+
 import datetime
 from ._validations import is_date_valid, code_error
 from crypto.models import *
 
 
 class Client(object):
-    """
-    Client instance is used to fetch cryptocurrency data from coinpaprika.com
-    It uses coinpaprika API
-    It is possible to fetch three types of data ( because it meets my needs )
-    1. Today's data of specific cryptocurrency
-    2. Historical data of specifiv crypocurrency, from provided date
-    3. Today's data of all cryptocurrencies
-    """
+
     def __init__(self):
         self.interval = "1h"
         self.now = datetime.datetime.now()
-
         self.cur_datetime = datetime.datetime.now()
         self.base_url = "https://api.coinpaprika.com/v1/"
         self.parser = argparse.ArgumentParser(description="Process requests for paprikacoin API data")
@@ -31,7 +22,6 @@ class Client(object):
                             help='Get all current data')
 
     def process(self) -> None:
-        """Process command line arguments and invoke appropirate methods"""
         args = self.parser.parse_args()
         if args.coin:
             self.today_coin(args.coin)
@@ -43,13 +33,6 @@ class Client(object):
             self.all_today_coins()
 
     def today_coin(self, coin_id: str) -> None:
-        """
-        Fetch current data of specific cryptocurrency (coin_id)
-        Parameters:
-            coin_id: string-like id of specific coin
-        Returns:
-            None
-        """
         get_coin_url = "/".join((self.base_url, "tickers", coin_id))
         daily_coin = requests.get(url=get_coin_url)
         code_error(daily_coin.status_code)
@@ -58,31 +41,16 @@ class Client(object):
 
 
     def all_today_coins(self) -> None:
-        """
-        Fetch current data of all cryptocurrencies
-        Save to file all_coins_{current_date}.json
-        Returns:
-            None
-        """
         get_all_coins_url = "/".join((self.base_url, 'tickers'))
         all_daily_coins = requests.get(url=get_all_coins_url)
         code_error(all_daily_coins.status_code)
-        #Coin.delete_coins()
+        Coin.delete_coins()
         CoinForTable.delete_coins()
         self._save_database(all_daily_coins.json(), "CoinForTable")
         self._save_database(all_daily_coins.json(), "all")
 
 
     def coin_history(self, coin_id: str, start_date: str) -> None:
-        """
-        Fetch historical data of specific cryptocurrency (coin_id), from start_date
-        Save to django database ( modified from orginal )
-        Parameters:
-            coin_id: string-like id of specific coin
-            start_date: string-like date formated "YYYY-MM-DD"
-        Returns:
-            None
-        """
         if is_date_valid(start_date):
             get_coin_history_url = "/".join((self.base_url, 'tickers', coin_id, 'historical'))
             coin_history = requests.get(url=get_coin_history_url, params={"start": start_date,
@@ -91,27 +59,7 @@ class Client(object):
             self._save_database(coin_history.json(), coin_id)
 
 
-    @staticmethod
-    def _save_json(data: requests.request, filename: str) -> None:
-        """
-        Save data to file named filename (json)
-        Parameters:
-            data: request.request - object that contains response from requests.get
-            filename: str
-        """
-
-        if not os.path.exists("data"):
-            os.mkdir("data")
-        with open(f"data/{filename}", 'w') as fp:
-            json.dump(data.json(), fp)
-
     def _save_database(self, data: requests.request, id: str) -> None:
-        """
-            Save data to database ( new method )
-            Parameters:
-                data: request.request - object that contains response from requests.get
-                filename: str
-        """
         if id == 'all':
             ctr = 0
             samples = len(data)
@@ -124,7 +72,8 @@ class Client(object):
             for coin in data:
                 new_coin = CoinForTable()
                 new_coin.price = coin["quotes"]["USD"]["price"]
-                new_coin.coin_id = coin["name"]
+                new_coin.coin_id = coin["id"]
+                new_coin.coin_name = coin["name"]
                 new_coin.percent_change_24h = coin["quotes"]["USD"]['percent_change_24h']
                 new_coin.percent_change_7d = coin["quotes"]["USD"]['percent_change_7d']
                 new_coin.percent_change_30d = coin["quotes"]["USD"]['percent_change_30d']

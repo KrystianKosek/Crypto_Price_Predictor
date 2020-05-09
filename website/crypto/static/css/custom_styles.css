@@ -16,6 +16,11 @@ header{
     text-align: left;
 }
 
+.plot{
+    background-color: white;
+    margin: 10px;
+}
+
 .navbar-brand{
     margin: 10px;
     font-size: xx-large;

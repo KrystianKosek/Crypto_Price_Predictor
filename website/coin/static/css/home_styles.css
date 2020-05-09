@@ -1,0 +1,65 @@
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header{
+    background-color: #d5ffff;
+    margin: 10px;
+    text-align: center;
+}
+
+.container-fluid{
+    
+}
+.custom-control custom-switch{
+    text-align: left;
+}
+
+.navbar-brand{
+    margin: 10px;
+    font-size: xx-large;
+}
+
+.charts-section{
+    background-color: #ffffcc;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.charts-section figure img {
+    border-radius: 10px;
+}
+
+.charts-section figure{
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.table-section {
+    background-color: gainsboro;
+    margin: 10px;
+}
+
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+bottom: .5em;
+}
+
+footer{
+    margin-left: 10px;
+    margin-bottom: 5px;
+    font-size: smaller;
+}

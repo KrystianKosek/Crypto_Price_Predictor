@@ -3,7 +3,7 @@ import argparse
 
 import datetime
 from ._validations import is_date_valid, code_error
-from crypto.models import *
+from coin.models import Coin, CoinForTable
 
 
 class Client(object):
@@ -39,7 +39,6 @@ class Client(object):
         filename = "{}_{}.json".format(coin_id, self.cur_datetime.strftime("%Y-%m-%d"))
         self._save_json(daily_coin, filename)
 
-
     def all_today_coins(self) -> None:
         get_all_coins_url = "/".join((self.base_url, 'tickers'))
         all_daily_coins = requests.get(url=get_all_coins_url)
@@ -49,7 +48,6 @@ class Client(object):
         self._save_database(all_daily_coins.json(), "CoinForTable")
         self._save_database(all_daily_coins.json(), "all")
 
-
     def coin_history(self, coin_id: str, start_date: str) -> None:
         if is_date_valid(start_date):
             get_coin_history_url = "/".join((self.base_url, 'tickers', coin_id, 'historical'))
@@ -57,7 +55,6 @@ class Client(object):
                                                                           "interval": self.interval})
             code_error(coin_history.status_code)
             self._save_database(coin_history.json(), coin_id)
-
 
     def _save_database(self, data: requests.request, id: str) -> None:
         if id == 'all':
@@ -87,6 +84,7 @@ class Client(object):
                 new_coin.coin_id = id
                 new_coin.datetime_stamp = coin['timestamp']
                 new_coin.save()
+
 
 if __name__ == '__main__':
     client = Client()

@@ -3,7 +3,7 @@ import datetime
 from crypto.models import Currency
 
 
-class Exchange_client():
+class ExchangeClient():
     def __init__(self):
         self.url = "http://data.fixer.io/api/latest"
         self.password = "7d2b1c67a29c26c7bbeafe09ea4c0d0a"

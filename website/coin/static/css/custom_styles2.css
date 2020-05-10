@@ -16,6 +16,11 @@ header{
     text-align: left;
 }
 
+.plot{
+    background-color: white;
+    margin: 10px;
+}
+
 .navbar-brand{
     margin: 10px;
     font-size: xx-large;
@@ -43,6 +48,12 @@ header{
 .table-section {
     background-color: gainsboro;
     margin: 10px;
+}
+
+.course{
+    background-color: white;
+    border: 1px;
+    border-radius: 3px;
 }
 
 table.dataTable thead .sorting:after,

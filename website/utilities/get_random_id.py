@@ -1,5 +1,5 @@
 from random import shuffle
-from coin.models import CoinForTable
+from coin.models import Coin
 
 
 def get_random_id() -> tuple:
@@ -10,7 +10,7 @@ def get_random_id() -> tuple:
     Returns
         tuple: coin_id1, coin_id2
     """
-    all_coins = CoinForTable.objects.values_list('coin_id', flat=True).distinct()
+    all_coins = Coin.objects.values_list('coin_id', flat=True).distinct()
     all_coins = list(all_coins)
     shuffle(all_coins)
     return all_coins.pop(), all_coins.pop()

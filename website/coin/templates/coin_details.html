@@ -145,12 +145,12 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
+                    <td>{{coin_name}}</td>
+                    <td>{{coin_ranking}}</td>
+                    <td>{{price}}</td>
+                    <td>{{beta_value}}</td>
+                    <td>{{circulating_supply}}</td>
+                    <td>{{max_supply}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -158,7 +158,7 @@
                 <thead>
                 <tr>
                     <th scope="col" class="th-sm"><b>Volume 24h</b></th>
-                    <th scope="col" class="th-sm"><b>Change 24h</b></th>
+                    <th scope="col" class="th-sm"><b>Volume change 24h</b></th>
                     <th scope="col" class="th-sm"><b>Market Cap</b></th>
                     <th scope="col" class="th-sm"><b>Percent change 24h</b></th>
                     <th scope="col" class="th-sm"><b>Percent change 7d</b></th>
@@ -167,12 +167,12 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
+                    <td>{{volume_24h}}</td>
+                    <td style="color:{{change_color}}">{{change_24h}}</td>
+                    <td>{{market_cap}}</td>
+                    <td style="color:{{ 24h_color }}">{{percent_change_24h}}</td>
+                    <td style="color:{{ 7d_color }}">{{percent_change_7d}}</td>
+                    <td style="color:{{ 30d_color }}">{{percent_change_30d}}</td>
                 </tr>
                 </tbody>
             </table>

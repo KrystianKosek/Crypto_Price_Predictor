@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.template import loader
 from utilities import update_data
 from .models import CoinForTable, Coin
+from crypto.models import Currency
+
 
 def index(request, coin_name):
     template = loader.get_template('coin_details.html')
@@ -16,8 +18,9 @@ def index(request, coin_name):
         labels.append(str(x.datetime_stamp.date()))
         data.append(str(x.price))
 
+    pln_course = Currency.objects.filter(currency_name = "PLN")[0]
     context.update({"coin_id": coin_name, "labels": labels, "data": data})
-    context.update({"price": coin.price, "percent_change_24h": coin.percent_change_24h, "percent_change_7d": coin.percent_change_7d,
+    context.update({"price_USD": coin.price, "price_PLN": coin.price * pln_course.rate, "percent_change_24h": coin.percent_change_24h, "percent_change_7d": coin.percent_change_7d,
                     "percent_change_30d": coin.percent_change_30d, "beta_value": coin.beta_value, "circulating_supply": coin.circulating_supply,
                     "max_supply": coin.max_supply, "volume_24h": coin.volume_24h, "change_24h": coin.change_24h,
                     "market_cap": coin.market_cap, "coin_ranking": int(coin.coin_ranking),"coin_name": coin.name})

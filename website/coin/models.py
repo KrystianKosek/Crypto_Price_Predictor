@@ -24,6 +24,13 @@ class CoinForTable(models.Model):
     percent_change_24h = models.FloatField(default=0.0)
     percent_change_7d = models.FloatField(default=0.0)
     percent_change_30d = models.FloatField(default=0.0)
+    beta_value = models.FloatField(default=0.0)
+    circulating_supply = models.FloatField(default=0.0)
+    max_supply = models.FloatField(default=0.0)
+    volume_24h = models.FloatField(default=0.0)
+    change_24h = models.FloatField(default=0.0)
+    market_cap = models.FloatField(default=0.0)
+    coin_ranking = models.FloatField(default=0.0)
 
     def __str__(self):
         return "{} {}".format(self.coin_id, self.datetime_stamp)

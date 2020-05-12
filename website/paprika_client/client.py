@@ -43,10 +43,10 @@ class Client(object):
         get_all_coins_url = "/".join((self.base_url, 'tickers'))
         all_daily_coins = requests.get(url=get_all_coins_url)
         code_error(all_daily_coins.status_code)
-        Coin.delete_coins()
+        #Coin.delete_coins()
         CoinForTable.delete_coins()
         self._save_database(all_daily_coins.json(), "CoinForTable")
-        self._save_database(all_daily_coins.json(), "all")
+        #self._save_database(all_daily_coins.json(), "all")
 
     def coin_history(self, coin_id: str, start_date: str) -> None:
         if is_date_valid(start_date):
@@ -70,10 +70,17 @@ class Client(object):
                 new_coin = CoinForTable()
                 new_coin.price = coin["quotes"]["USD"]["price"]
                 new_coin.coin_id = coin["id"]
-                new_coin.coin_name = coin["name"]
+                new_coin.name = coin["name"]
                 new_coin.percent_change_24h = coin["quotes"]["USD"]['percent_change_24h']
                 new_coin.percent_change_7d = coin["quotes"]["USD"]['percent_change_7d']
                 new_coin.percent_change_30d = coin["quotes"]["USD"]['percent_change_30d']
+                new_coin.beta_value = coin["beta_value"]
+                new_coin.circulating_supply = coin["circulating_supply"]
+                new_coin.max_supply = coin["max_supply"]
+                new_coin.volume_24h = coin["quotes"]["USD"]["volume_24h"]
+                new_coin.change_24h = coin["quotes"]["USD"]["volume_24h_change_24h"]
+                new_coin.market_cap = coin["quotes"]["USD"]["market_cap"]
+                new_coin.coin_ranking = coin["rank"]
 
                 new_coin.datetime_stamp = coin['last_updated']
                 new_coin.save()

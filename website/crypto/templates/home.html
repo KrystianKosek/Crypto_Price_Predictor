@@ -35,8 +35,8 @@
 <!--Header section-->
 <header>
     <!--Navigation bar-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <h1 class="navbar-brand" href="#">Crypto Price Predictor</h1>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <h1 style="color:var(--color-tx1);" class="navbar-brand" href="#">Crypto Price Predictor</h1>
         <div class="container-fluid position">
 
             <!--Navbar-->
@@ -49,16 +49,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home </a>
+                        <a style="color:var(--color-tx1);" class="nav-link" href="#">Home </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                        <a style="color:var(--color-tx1);" class="nav-link" href="#">Features</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
+                        <a style="color:var(--color-tx1);" class="nav-link" href="#">Pricing</a>
                 </ul>
                 <!-- Choose currency -->
-                <a>Currency:</a>
+                <a style="color:var(--color-tx1);">Currency:</a>
                 <select id="curr">
                     <option value="usd" selected>USD</option>
                     <option value="pln">PLN</option>
@@ -84,7 +84,7 @@
 <section class="table-section">
     <table id="dtDynamicVerticalScrollExample" class="table table-striped table-bordered table-sm" cellspacing="0"
            width="100%">
-        <thead>
+        <thead class="txt-txt">
         <tr>
             <th class="th-sm">#
             </th>
@@ -100,11 +100,11 @@
             </th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="txt-txt">
         {% for t in table %}
             <tr>
                 <th scope="row">{{ t.id }}</th>
-                <td><a href="coin/{{ t.name }}">{{ t.name }}</a></td>
+                <td><a style="color:var(--color-tx1);" href="coin/{{ t.name }}">{{ t.name }}</a></td>
                 <td><a class="price" data-usd={{ t.price_USD }} data-pln={{ t.price_PLN }}>{{ t.price_USD }}</a></td>
                 <td><a href="https://youtube.com/" style="color:{{ t.24h_color }}">{{ t.percent_change_24h }}</a></td>
                 <td><a href="https://youtube.com/" style="color:{{ t.7d_color }}">{{ t.percent_change_7d }}</a></td>
@@ -113,7 +113,7 @@
             </tr>
         {% endfor %}
         </tbody>
-        <tfoot>
+        <tfoot style="color:var(--color-tx1);">
         <tr>
             <th class="th-sm">#
             </th>
@@ -134,8 +134,13 @@
 
 
 <!--Just basic footer section with some bullshits-->
-<footer>
+<footer class="txt-txt">
     <a>© 2020 Pytonowi Wąsacze, Inc.</a>
+    <div class="tfc">
+        <input class="tfh" type="checkbox" id="switchCheckbox1">
+        <label aria-hidden="true" class="tfp" for="switchCheckbox1">Night Mode On</label>
+        <div aria-hidden="true" class="tfd"></div>
+    </div>
 </footer>
 
 <!-- jQuery -->
@@ -167,6 +172,7 @@
 
 <!--Make charts based on data from views-->
 <script>
+    txt_color = "gray";
     var config = {
         type: 'line',
         data: {
@@ -183,21 +189,40 @@
         },
         options: {
             responsive: true,
+            legend: {
+                labels: {
+                    fontColor: txt_color
+                }
+            },
             scales: {
                 xAxes: [{
                     display: true,
+                    gridLines: {
+                        color: txt_color,
+                        zeroLineColor: txt_color
+                    },
                     ticks: {
+                        fontColor: txt_color,
                         maxTicksLimit: 11
                     },
                     scaleLabel: {
                         display: true,
+                        fontColor: txt_color,
                         labelString: 'Date [YY-MM-DD]'
                     }
                 }],
                 yAxes: [{
                     display: true,
+                    gridLines: {
+                        color: txt_color,
+                        zeroLineColor: txt_color
+                    },
+                    ticks: {
+                        fontColor: txt_color
+                    },
                     scaleLabel: {
                         display: true,
+                        fontColor: txt_color,
                         labelString: 'Price [$]'
                     }
                 }],
@@ -221,21 +246,40 @@
         },
         options: {
             responsive: true,
+            legend: {
+                labels: {
+                    fontColor: txt_color
+                }
+            },
             scales: {
                 xAxes: [{
                     display: true,
+                    gridLines: {
+                        color: txt_color,
+                        zeroLineColor: txt_color
+                    },
                     ticks: {
+                        fontColor: txt_color,
                         maxTicksLimit: 11
                     },
                     scaleLabel: {
                         display: true,
+                        fontColor: txt_color,
                         labelString: 'Date [YY-MM-DD]'
                     }
                 }],
                 yAxes: [{
                     display: true,
+                    gridLines: {
+                        color: txt_color,
+                        zeroLineColor: txt_color
+                    },
+                    ticks: {
+                        fontColor: txt_color
+                    },
                     scaleLabel: {
                         display: true,
+                        fontColor: txt_color,
                         labelString: 'Price [$]'
                     }
                 }],
@@ -251,6 +295,15 @@
     };
 
 </script>
+
+<!--switches to night mode-->
+<script>
+    document.getElementById('switchCheckbox1').addEventListener('change', function(event){
+        (event.target.checked) ? document.body.setAttribute('data-theme', 'dark') : document.body.removeAttribute('data-theme');
+    });
+</script>
+
+
 </body>
 
 </html>

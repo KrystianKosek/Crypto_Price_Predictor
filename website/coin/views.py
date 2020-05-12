@@ -22,8 +22,12 @@ def index(request, coin_name):
     context.update({"coin_id": coin_name, "labels": labels, "data": data})
     context.update({"price_USD": coin.price, "price_PLN": coin.price * pln_course.rate, "percent_change_24h": coin.percent_change_24h, "percent_change_7d": coin.percent_change_7d,
                     "percent_change_30d": coin.percent_change_30d, "beta_value": coin.beta_value, "circulating_supply": coin.circulating_supply,
-                    "max_supply": coin.max_supply, "volume_24h": coin.volume_24h, "change_24h": coin.change_24h,
+                    "volume_24h": coin.volume_24h, "change_24h": coin.change_24h,
                     "market_cap": coin.market_cap, "coin_ranking": int(coin.coin_ranking),"coin_name": coin.name})
+    if coin.max_supply == 0.0:
+        context.update({"max_supply": "undefined"})
+    else:
+        context.update({"max_supply": coin.max_supply})
 
     if coin.percent_change_24h < 0:
         context.update({"24h_color": "red"})

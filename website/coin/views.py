@@ -60,4 +60,7 @@ def index(request, coin_name):
     return HttpResponse(template.render(context, request))
 
 
+def predict(request, coin_name):
+    return HttpResponse(coin_name)
+
 

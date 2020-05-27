@@ -17,7 +17,7 @@ def index(request):
     context = {}
 
     all_cryptos = CoinForTable.objects.all()
-    pln_course = Currency.objects.filter(currency_name = "PLN")[0]
+    pln_course = Currency.objects.filter(currency_name="PLN")[0]
 
     mapa = []
     i = 1

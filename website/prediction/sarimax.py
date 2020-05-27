@@ -1,14 +1,12 @@
 import itertools
-import warnings
 import json
+import warnings
 
 import matplotlib.pyplot as plt
 import pandas as pd
 import statsmodels.api as sm
 from coin.models import Coin
 from django_pandas.io import read_frame
-from pylab import rcParams
-
 
 warnings.filterwarnings("ignore")
 plt.style.use('fivethirtyeight')
@@ -52,6 +50,23 @@ def fit_parameters(coin_id: str):
 
     with open("hyperparams/{}.json".format(coin_id), "w+") as f:
         json.dump(dict_data, f)
+
+
+def predict(coin_id):
+    df = get_data_frame(coin_id)
+    with open("hyperparams/{}.json".format(coin_id), "r") as f:
+        param_dict = json.load(f)
+
+    coin_best_params = param_dict[coin_id]
+    mod = sm.tsa.statespace.SARIMAX(df,
+                                    order=coin_best_params[0],
+                                    seasonal_order=coin_best_params[1],
+                                    enforce_stationarity=False,
+                                    enforce_invertibility=False)
+    results = mod.fit()
+    pred_uc = results.get_forecast(steps=12)
+    pred_ci = pred_uc.conf_int()
+    return pred_ci
 
 
 if __name__ == "__main__":

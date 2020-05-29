@@ -1,10 +1,122 @@
 <!DOCTYPE html>
+{% load static %}
+{% static "" as staticUrl %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Price Predictor</title>
+
+     <!--Obligatory bootstrap includes-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="{% static "css/mdb.min.css" %}">
+
+    <!-- MDBootstrap Datatables  -->
+    <link href="{% static "css/addons/datatables.min.css" %}" rel="stylesheet">
+
+    <!--Home page styles-->
+    <link rel="stylesheet" href="{% static "css/predict_style.css" %}">
+
+    <!--Charts look-->
+    <script type="text/javascript" src="{% static "js/chart_look.js" %}"></script>
 </head>
 <body>
+
+<!--Header section-->
+<header>
+    <!--Navigation bar-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <h1 class="navbar-brand" href="#">Crypto Price Predictor</h1>
+        <div class="container-fluid position">
+
+            <!--Navbar-->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!--Options as a list-->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!--Main section with chart-->
+<section class="charts-section">
+    <div class="d-flex justify-content-center" style="width: 100%">
+        <figure class="figure">
+            <div class="plot">
+                <canvas id="canvas"></canvas>
+            </div>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-warning ">
+                        <input type="radio" name="options" id="option1" autocomplete="off"> 1H
+                    </label>
+                    <label class="btn btn-warning">
+                        <input type="radio" name="options" id="option2" autocomplete="off"> 4H
+                    </label>
+                    <label class="btn btn-warning active">
+                        <input type="radio" name="options" id="option3" autocomplete="off"> 8H
+                    </label>
+                    <label class="btn btn-warning active">
+                        <input type="radio" name="options" id="option3" autocomplete="off" checked> 12H
+                    </label>
+                </div>
+        </figure>
+
+    </div>
+
+</section>
+
+<!--Just basic footer section with some bullshits-->
+<footer>
+    <a>© 2020 Pytonowi Wąsacze, Inc.</a>
+</footer>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+
+<!-- Bootstrap core JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static "js/bootstrap.js" %}"></script>
+<script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/mdb.min.js" %}"></script>
+
+<!-- MDBootstrap Datatables  -->
+<script type="text/javascript" src="{% static "js/addons/datatables.min.js" %}"></script>
+
+<!--Dynamic Veritcal Table Script-->
+<script type="text/javascript" src="{% static "js/table_script.js" %}"></script>
+
+<!--Currency change script-->
+<script type="text/javascript" src="{% static "js/currency_change_script.js" %}"></script>
 
 </body>
 </html>

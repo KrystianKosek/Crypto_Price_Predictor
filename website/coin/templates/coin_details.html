@@ -105,34 +105,32 @@
             </div>
             <div class="input-group mb-1" style="margin-left: 2px">
                 <div class="input-group-prepend">
-                    <select id="curr" style="margin-right: 5px; border-radius: 3px">
+                    <select id="curr2" style="margin-right: 5px; border-radius: 3px">
                         <option value="usd" selected>USD</option>
                         <option value="pln">PLN</option>
                     </select>
                 </div>
-                <input type="text" class="form-control" style="border-radius: 3px; margin-right: 1px"
+                <input type="text" id="amountInput" class="form-control" style="border-radius: 3px; margin-right: 1px"
                        aria-label="Dollar amount (with dot and two decimal places)">
             </div>
             <div class="input-group" style="margin-left: 1px;">
-                <input type="text" class="form-control" style="border-radius: 3px"
+                <input type="text" id="coinAmount" class="form-control" style="border-radius: 3px"
                        aria-label="Dollar amount (with dot and two decimal places)">
                 <div class="course"
                      style="display: flex; justify-content:center; align-items: center; background-color: white; border: 1px; border-radius: 3px; margin-left: 5px; margin-right: 1px; height: 37px; width: 60px">
                     <span>{{ coin_name }}</span>
                 </div>
             </div>
-            <div class="input-group-prepend">
-                <div class="course"
-                     style="display: flex; justify-content:center; align-items: center; background-color: white; border: 1px; border-radius: 3px; margin-top: 6px; margin-left: 2px; height: 40px; width: 400px">
-                    <span>1 USD = 0.00025 {{coin_name}}</span>
-                </div>
+            <div style="width: 160px; margin:0 auto;" class="input-group-prepend">
                 <button class="btn blue-gradient"
-                        style="margin-right: 1px; height: 40px; text-align: center; line-height: 5px;" onclick="calculateCurrency()">Calculate
+                        style="margin-right: 1px; height: 40px; width: auto; text-align: center; line-height: 5px;"
+                        id="CalculateAmount">Calculate
                 </button>
             </div>
             <div style="width:250px; margin:0 auto;">
                 <button class="btn blue-gradient"
-                        style="margin-right: 1px; height: 40px; width: auto; text-align: center; line-height: 5px;"> <a href="/coin/{{ coin_name }}/predict" style="color:white;">Check for predictions </a>
+                        style="margin-right: 1px; height: 40px; width: auto; text-align: center; line-height: 5px;"><a
+                        href="/coin/{{ coin_name }}/predict" style="color:white;">Check for predictions </a>
                 </button>
             </div>
         </div>
@@ -150,12 +148,12 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{coin_name}}</td>
-                    <td>{{coin_ranking}}</td>
+                    <td>{{ coin_name }}</td>
+                    <td>{{ coin_ranking }}</td>
                     <td><a class="price" data-usd={{ price_USD }} data-pln={{ price_PLN }}>{{ price_USD }}</a></td>
-                    <td>{{beta_value}}</td>
-                    <td>{{circulating_supply}}</td>
-                    <td>{{max_supply}}</td>
+                    <td>{{ beta_value }}</td>
+                    <td>{{ circulating_supply }}</td>
+                    <td>{{ max_supply }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -172,12 +170,12 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{volume_24h}}</td>
-                    <td style="color:{{change_color}}">{{change_24h}}</td>
-                    <td>{{market_cap}}</td>
-                    <td style="color:{{ 24h_color }}">{{percent_change_24h}}</td>
-                    <td style="color:{{ 7d_color }}">{{percent_change_7d}}</td>
-                    <td style="color:{{ 30d_color }}">{{percent_change_30d}}</td>
+                    <td>{{ volume_24h }}</td>
+                    <td style="color:{{ change_color }}">{{ change_24h }}</td>
+                    <td>{{ market_cap }}</td>
+                    <td style="color:{{ 24h_color }}">{{ percent_change_24h }}</td>
+                    <td style="color:{{ 7d_color }}">{{ percent_change_7d }}</td>
+                    <td style="color:{{ 30d_color }}">{{ percent_change_30d }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -221,7 +219,10 @@
 <!--Make charts based on data from views-->
 <script>
     var dat = [{% for i in data %} "{{ i }}", {% endfor %}];
+    dat = dat.slice(-24 * 30);
     var lab = [{% for i in labels %} "{{ i }}", {% endfor %}]
+    lab = lab.slice(-24 * 30);
+
     var config = {
         type: 'line',
         data: {
@@ -233,7 +234,7 @@
                 fill: false,
                 borderWidth: 2,
                 pointRadius: 0,
-                data: dat,
+                data: dat
             }]
         },
         options: {
@@ -261,10 +262,39 @@
     };
 
     window.onload = function () {
+        dat = config.data.datasets;
+        lab = config.data.labels;
         var ctx = document.getElementById('canvas').getContext('2d');
         window.myLine = new Chart(ctx, config);
     };
 
+    document.getElementById('option1').addEventListener('click', function () {
+        config.data.datasets = dat.slice(-24);
+        config.data.labels = lab.slice(-24);
+        window.myLine.update();
+    });
+
+    document.getElementById('option2').addEventListener('click', function () {
+        config.data.datasets = dat.slice(-24 * 7);
+        config.data.labels = lab.slice(- 24 * 7);
+
+        window.myLine.update();
+    });
+
+    document.getElementById('option3').addEventListener('click', function () {
+        config.data.datasets = dat;
+        config.data.labels = lab;
+
+        window.myLine.update();
+    });
+
+
+    document.getElementById('CalculateAmount').addEventListener('click', function () {
+        document.getElementById('coinAmount').value = document.getElementById('amountInput').value / (document.getElementById('curr2').value == "usd" ? {{ price_USD }} : {{ price_PLN }});
+    })
+
+
+    document.getElementById('amountInput').value = "123";
 
 </script>
 </body>

@@ -8,9 +8,9 @@ from crypto.models import Currency
 
 def index(request):
     coin1_id, coin2_id = get_random_id.get_random_id()
-    update_data.update_coin(coin1_id)
-    update_data.update_coin(coin2_id)
-    update_data.update_course("PLN")
+    #update_data.update_coin(coin1_id)
+    #update_data.update_coin(coin2_id)
+    #update_data.update_course("PLN")
 
     template = loader.get_template('home.html')
 

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypto Price Predictor</title>
 
-     <!--Obligatory bootstrap includes-->
+    <!--Obligatory bootstrap includes-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -23,7 +23,7 @@
     <link href="{% static "css/addons/datatables.min.css" %}" rel="stylesheet">
 
     <!--Home page styles-->
-    <link rel="stylesheet" href="{% static "css/predict_style.css" %}">
+    <link rel="stylesheet" href="{% static "css/predict_styles.css" %}">
 
     <!--Charts look-->
     <script type="text/javascript" src="{% static "js/chart_look.js" %}"></script>
@@ -68,25 +68,25 @@
             <div class="plot">
                 <canvas id="canvas"></canvas>
             </div>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-warning ">
-                        <input type="radio" name="options" id="option1" autocomplete="off"> 1H
-                    </label>
-                    <label class="btn btn-warning">
-                        <input type="radio" name="options" id="option2" autocomplete="off"> 4H
-                    </label>
-                    <label class="btn btn-warning active">
-                        <input type="radio" name="options" id="option3" autocomplete="off"> 8H
-                    </label>
-                    <label class="btn btn-warning active">
-                        <input type="radio" name="options" id="option3" autocomplete="off" checked> 12H
-                    </label>
-                </div>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-warning ">
+                    <input type="radio" name="options" id="option1" autocomplete="off"> 1H
+                </label>
+                <label class="btn btn-warning">
+                    <input type="radio" name="options" id="option2" autocomplete="off"> 4H
+                </label>
+                <label class="btn btn-warning active">
+                    <input type="radio" name="options" id="option3" autocomplete="off"> 8H
+                </label>
+                <label class="btn btn-warning active">
+                    <input type="radio" name="options" id="option4" autocomplete="off" checked> 12H
+                </label>
+            </div>
         </figure>
-
     </div>
 
 </section>
+
 
 <!--Just basic footer section with some bullshits-->
 <footer>
@@ -117,6 +117,99 @@
 
 <!--Currency change script-->
 <script type="text/javascript" src="{% static "js/currency_change_script.js" %}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<!--Make charts based on data from views-->
+<script>
+    var dat1 = [{% for i in lower_pred_price %} "{{ i }}", {% endfor %}];
+    var dat2 = [{% for i in upper_pred_price %} "{{ i }}", {% endfor %}];
+    var lab = [{% for i in prediction_index %} "{{ i }}", {% endfor %}]
+
+    var config = {
+        type: 'line',
+        data: {
+            labels: lab,
+            datasets: [{
+                label: 'lower pred',
+                backgroundColor: window.chartColors.blue,
+                borderColor: window.chartColors.blue,
+                fill: false,
+                borderWidth: 2,
+                pointRadius: 0,
+                data: dat1,
+            }, {
+                label: 'upper pred',
+                backgroundColor: window.chartColors.red,
+                borderColor: window.chartColors.red,
+                fill: false,
+                borderWidth: 2,
+                pointRadius: 0,
+                data: dat2,
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                xAxes: [{
+                    display: true,
+                    ticks: {
+                        maxTicksLimit: 11
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date [YY-MM-DD]'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Price [$]'
+                    }
+                }]
+            }
+        }
+    };
+
+    window.onload = function () {
+        dat1 = config.data.datasets[0].data;
+        dat2 = config.data.datasets[1].data;
+        lab = config.data.labels;
+        var ctx = document.getElementById('canvas').getContext('2d');
+        window.myLine = new Chart(ctx, config);
+    };
+
+    document.getElementById('option1').addEventListener('click', function () {
+        config.data.datasets[0].data = dat1.slice(10, 12);
+        config.data.datasets[1].data = dat2.slice(10, 12);
+        config.data.labels = lab.slice(10, 12);
+        window.myLine.update();
+    });
+
+    document.getElementById('option2').addEventListener('click', function () {
+        config.data.datasets[0].data = dat1.slice(-4);
+        config.data.datasets[1].data = dat2.slice(-4);
+        config.data.labels = lab.slice(-4);
+        window.myLine.update();
+    });
+
+    document.getElementById('option3').addEventListener('click', function () {
+        config.data.datasets[0].data = dat1.slice(-8);
+        config.data.datasets[1].data = dat2.slice(-8);
+        config.data.labels = lab.slice(3, 12);
+        window.myLine.update();
+    });
+
+    document.getElementById('option4').addEventListener('click', function () {
+        config.data.datasets[0].data = dat1;
+        config.data.datasets[1].data = dat2;
+        config.data.labels = lab;
+        window.myLine.update();
+    });
+
+
+</script>
 
 </body>
 </html>

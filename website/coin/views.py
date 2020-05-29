@@ -53,8 +53,14 @@ def index(request, coin_name):
 def predict(request, coin_name):
     template = loader.get_template('predict.html')
     df = prediction(CoinForTable.objects.get(name=coin_name).coin_id)
+
+    labels = []
+
+    for i in df.index.values:
+        labels.append(str(i)[11: 16])
+
     context = {}
-    context.update({"prediction_index": df.index.values,
+    context.update({"prediction_index": labels,
                     "lower_pred_price": df['lower price'].values,
                     "upper_pred_price": df['upper price'].values
                     })

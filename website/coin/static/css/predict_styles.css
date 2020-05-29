@@ -19,7 +19,7 @@ header{
     background-color: white;
     margin: 10px;
     width: 100%;
-    height: 92%;
+    height: 500px;
 }
 
 .navbar-brand{
@@ -34,7 +34,7 @@ header{
 
 .charts-section{
     background-color: #ffffcc;
-    height: 86vh;
+    height: 65vh;
     padding: 20px;
     display: flex;
     flex-direction: row;

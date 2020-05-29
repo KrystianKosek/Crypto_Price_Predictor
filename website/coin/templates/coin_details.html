@@ -218,12 +218,12 @@
 
 <!--Make charts based on data from views-->
 <script>
-    var dat = [{% for i in data %} "{{ i }}", {% endfor %}];
+    let dat = [{% for i in data %} "{{ i }}", {% endfor %}];
     dat = dat.slice(-24 * 30);
-    var lab = [{% for i in labels %} "{{ i }}", {% endfor %}]
+    let lab = [{% for i in labels %} "{{ i }}", {% endfor %}]
     lab = lab.slice(-24 * 30);
 
-    var config = {
+    let config = {
         type: 'line',
         data: {
             labels: lab,
@@ -262,29 +262,27 @@
     };
 
     window.onload = function () {
-        dat = config.data.datasets;
+        dat = config.data.datasets[0].data;
         lab = config.data.labels;
         var ctx = document.getElementById('canvas').getContext('2d');
         window.myLine = new Chart(ctx, config);
     };
 
     document.getElementById('option1').addEventListener('click', function () {
-        config.data.datasets = dat.slice(-24);
+        config.data.datasets[0].data = dat.slice(-24);
         config.data.labels = lab.slice(-24);
         window.myLine.update();
     });
 
     document.getElementById('option2').addEventListener('click', function () {
-        config.data.datasets = dat.slice(-24 * 7);
-        config.data.labels = lab.slice(- 24 * 7);
-
+        config.data.datasets[0].data = dat.slice(-24 * 7);
+        config.data.labels = lab.slice(-24 * 7);
         window.myLine.update();
     });
 
     document.getElementById('option3').addEventListener('click', function () {
-        config.data.datasets = dat;
+        config.data.datasets[0].data = dat;
         config.data.labels = lab;
-
         window.myLine.update();
     });
 

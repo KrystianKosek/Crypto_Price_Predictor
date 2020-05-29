@@ -28,8 +28,7 @@ https://crypto-pred-test.herokuapp.com/
    - future courses prediction
    - user interface
    ### Week 5. (01.06 - 07.06) 
-   - predictions of profits and losses
-   - tips suggesting what to invest in
+   - rest of the course prediction
    - nicer front end
    ### Week 6. (07.06 - 15.06) 
    - release version

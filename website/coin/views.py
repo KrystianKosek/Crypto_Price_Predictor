@@ -1,7 +1,7 @@
 from crypto.models import Currency
 from django.http import HttpResponse
 from django.template import loader
-from prediction.sarimax import predict
+from prediction.sarimax import predict as prediction
 from utilities import update_data
 
 from .models import CoinForTable, Coin
@@ -21,7 +21,7 @@ def index(request, coin_name):
         data.append(str(x.price))
 
     pln_course = Currency.objects.filter(currency_name="PLN")[0]
-    context.update({"coin_id": coin_name, "labels": labels, "data": data})
+    context.update({"coin_id": coin.coin_id, "coin_name": coin_name, "labels": labels, "data": data})
     context.update({"price_USD": coin.price, "price_PLN": coin.price * pln_course.rate,
                     "percent_change_24h": coin.percent_change_24h, "percent_change_7d": coin.percent_change_7d,
                     "percent_change_30d": coin.percent_change_30d, "beta_value": coin.beta_value,
@@ -51,8 +51,8 @@ def index(request, coin_name):
 
 
 def predict(request, coin_name):
-    template = loader.get_template('coin_details.html')
-    df = predict(coin_name)
+    template = loader.get_template('predict.html')
+    df = prediction(CoinForTable.objects.get(name=coin_name).coin_id)
     context = {}
     context.update({"prediction_index": df.index.values,
                     "lower_pred_price": df['lower price'].values,

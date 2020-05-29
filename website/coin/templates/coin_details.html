@@ -101,7 +101,7 @@
     <div class="d-flex justify-content-center" style="width: 100%">
         <div class="container" style="max-width: 500px; margin-top: 10px;">
             <div style="margin-bottom: 5px; justify-content:center; align-items: center">
-                <p style="font-size: large;">Check {{ coin_id }} course for your transaction</p>
+                <p style="font-size: large;">Check {{ coin_name }} course for your transaction</p>
             </div>
             <div class="input-group mb-1" style="margin-left: 2px">
                 <div class="input-group-prepend">
@@ -118,7 +118,7 @@
                        aria-label="Dollar amount (with dot and two decimal places)">
                 <div class="course"
                      style="display: flex; justify-content:center; align-items: center; background-color: white; border: 1px; border-radius: 3px; margin-left: 5px; margin-right: 1px; height: 37px; width: 60px">
-                    <span>{{ coin_id }}</span>
+                    <span>{{ coin_name }}</span>
                 </div>
             </div>
             <div class="input-group-prepend">
@@ -128,6 +128,11 @@
                 </div>
                 <button class="btn blue-gradient"
                         style="margin-right: 1px; height: 40px; text-align: center; line-height: 5px;" onclick="calculateCurrency()">Calculate
+                </button>
+            </div>
+            <div style="width:250px; margin:0 auto;">
+                <button class="btn blue-gradient"
+                        style="margin-right: 1px; height: 40px; width: auto; text-align: center; line-height: 5px;"> <a href="/coin/{{ coin_name }}/predict" style="color:white;">Check for predictions </a>
                 </button>
             </div>
         </div>
@@ -222,7 +227,7 @@
         data: {
             labels: lab,
             datasets: [{
-                label: "{{ coin_id }}",
+                label: "{{ coin_name }}",
                 backgroundColor: window.chartColors.red,
                 borderColor: window.chartColors.red,
                 fill: false,
@@ -259,6 +264,7 @@
         var ctx = document.getElementById('canvas').getContext('2d');
         window.myLine = new Chart(ctx, config);
     };
+
 
 </script>
 </body>

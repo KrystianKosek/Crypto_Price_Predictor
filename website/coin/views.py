@@ -62,6 +62,7 @@ def predict(request, coin_name):
     context = {}
     context.update({"prediction_index": labels,
                     "lower_pred_price": df['lower price'].values,
-                    "upper_pred_price": df['upper price'].values
+                    "upper_pred_price": df['upper price'].values,
+                    "average_pred_price": (df['lower price'].values + df['upper price'].values)/ 2
                     })
     return HttpResponse(template.render(context, request))

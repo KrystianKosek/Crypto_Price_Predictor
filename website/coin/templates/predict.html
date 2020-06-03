@@ -124,6 +124,8 @@
 <script>
     var dat1 = [{% for i in lower_pred_price %} "{{ i }}", {% endfor %}];
     var dat2 = [{% for i in upper_pred_price %} "{{ i }}", {% endfor %}];
+    var dat3 = [{% for i in average_pred_price %} "{{ i }}", {% endfor %}];
+
     var lab = [{% for i in prediction_index %} "{{ i }}", {% endfor %}]
 
     var config = {
@@ -146,6 +148,14 @@
                 borderWidth: 2,
                 pointRadius: 0,
                 data: dat2,
+            }, {
+                label: 'avg pred',
+                backgroundColor: window.chartColors.green,
+                borderColor: window.chartColors.green,
+                fill: false,
+                borderWidth: 2,
+                pointRadius: 0,
+                data: dat3,
             }]
         },
         options: {
@@ -175,6 +185,7 @@
     window.onload = function () {
         dat1 = config.data.datasets[0].data;
         dat2 = config.data.datasets[1].data;
+        dat3 = config.data.datasets[2].data;
         lab = config.data.labels;
         var ctx = document.getElementById('canvas').getContext('2d');
         window.myLine = new Chart(ctx, config);
@@ -183,6 +194,7 @@
     document.getElementById('option1').addEventListener('click', function () {
         config.data.datasets[0].data = dat1.slice(10, 12);
         config.data.datasets[1].data = dat2.slice(10, 12);
+        config.data.datasets[2].data = dat3.slice(10, 12);
         config.data.labels = lab.slice(10, 12);
         window.myLine.update();
     });
@@ -190,6 +202,7 @@
     document.getElementById('option2').addEventListener('click', function () {
         config.data.datasets[0].data = dat1.slice(-4);
         config.data.datasets[1].data = dat2.slice(-4);
+        config.data.datasets[2].data = dat3.slice(-4);
         config.data.labels = lab.slice(-4);
         window.myLine.update();
     });
@@ -197,6 +210,7 @@
     document.getElementById('option3').addEventListener('click', function () {
         config.data.datasets[0].data = dat1.slice(-8);
         config.data.datasets[1].data = dat2.slice(-8);
+        config.data.datasets[2].data = dat3.slice(-8);
         config.data.labels = lab.slice(3, 12);
         window.myLine.update();
     });
@@ -204,6 +218,7 @@
     document.getElementById('option4').addEventListener('click', function () {
         config.data.datasets[0].data = dat1;
         config.data.datasets[1].data = dat2;
+        config.data.datasets[2].data = dat3;
         config.data.labels = lab;
         window.myLine.update();
     });

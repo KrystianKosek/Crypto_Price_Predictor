@@ -46,7 +46,7 @@ class Client(object):
         Coin.delete_coins()
         CoinForTable.delete_coins()
         self._save_database(all_daily_coins.json(), "CoinForTable")
-        self._save_database(all_daily_coins.json(), "all")
+        # self._save_database(all_daily_coins.json(), "all")
 
     def coin_history(self, coin_id: str, start_date: str) -> None:
         if is_date_valid(start_date):

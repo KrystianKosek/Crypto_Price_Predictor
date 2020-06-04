@@ -1,12 +1,12 @@
 import requests
 import datetime
 from crypto.models import Currency
+from django.conf import settings
 
 
 class ExchangeClient():
     def __init__(self):
         self.url = "http://data.fixer.io/api/latest"
-        self.password = "7d2b1c67a29c26c7bbeafe09ea4c0d0a"
         self.rate = 1.0
 
     def get_exchange_rate(self, currency_name: str) -> dict:
@@ -14,7 +14,7 @@ class ExchangeClient():
         if currency_name == "USD":
             pass
         else:
-            parameters = {"access_key": self.password, "symbols": (currency_name + ",USD")}
+            parameters = {"access_key": settings.FIXER_PASSWORD, "symbols": (currency_name + ",USD")}
             try:
                 response = requests.get(self.url, params=parameters)
                 response.raise_for_status()

@@ -1,8 +1,13 @@
 import datetime
 from coin.models import Coin
-from  crypto.models import Currency
+from crypto.models import Currency
 from paprika_client.client import Client
 from fixer_client.exchange_client import ExchangeClient
+
+
+def update_coin_for_table() -> None:
+    client = Client()
+    client.all_today_coins()
 
 
 def update_course(name: str) -> None:

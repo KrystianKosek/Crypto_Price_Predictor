@@ -1,7 +1,7 @@
 from crypto.models import Currency
 from django.http import HttpResponse
 from django.template import loader
-from prediction.sarimax import predict as prediction
+from prediction.sarimax import generate_predictions
 from utilities import update_data
 
 from .models import CoinForTable, Coin
@@ -52,7 +52,7 @@ def index(request, coin_name):
 
 def predict(request, coin_name):
     template = loader.get_template('predict.html')
-    df = prediction(CoinForTable.objects.get(name=coin_name).coin_id)
+    df = generate_predictions(CoinForTable.objects.get(name=coin_name).coin_id)
 
     labels = []
 

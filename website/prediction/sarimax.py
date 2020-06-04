@@ -52,10 +52,15 @@ def fit_parameters(coin_id: str):
         json.dump(dict_data, f)
 
 
-def predict(coin_id):
+def generate_predictions(coin_id):
     df = get_data_frame(coin_id)
-    with open("hyperparams/{}.json".format(coin_id), "r") as f:
-        param_dict = json.load(f)
+    try:
+        with open("hyperparams/{}.json".format(coin_id), "r") as f:
+            param_dict = json.load(f)
+    except FileNotFoundError:
+        fit_parameters(coin_id)
+        with open("hyperparams/{}.json".format(coin_id), "r") as f:
+            param_dict = json.load(f)
 
     coin_best_params = param_dict[coin_id]
     mod = sm.tsa.statespace.SARIMAX(df,

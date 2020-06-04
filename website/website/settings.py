@@ -125,3 +125,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "staticfiles"),
 ]
+
+FIXER_PASSWORD = "7d2b1c67a29c26c7bbeafe09ea4c0d0a"
